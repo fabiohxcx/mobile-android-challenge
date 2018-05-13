@@ -1,5 +1,7 @@
 package com.test.amaro.amarotest.model;
 
+import java.util.List;
+
 public class Product {
 
     private String name;
@@ -13,6 +15,7 @@ public class Product {
     private String discountPercentage;
     private String installments;
     private String image;
+    private List<Size> sizes;
 
     public String getName() {
         return name;
@@ -100,5 +103,13 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<Size> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<Size> sizes) {
+        this.sizes = sizes;
     }
 }
