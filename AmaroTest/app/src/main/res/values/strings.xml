@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AmaroTest</string>
+    <string name="str_all_time_best_sellers">All-time best-sellers</string>
 </resources>
