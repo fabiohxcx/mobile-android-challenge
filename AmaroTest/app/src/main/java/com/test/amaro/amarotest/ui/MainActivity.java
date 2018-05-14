@@ -2,12 +2,15 @@ package com.test.amaro.amarotest.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.test.amaro.amarotest.R;
+import com.test.amaro.amarotest.adapters.ProductMainAdapter;
 import com.test.amaro.amarotest.model.Product;
 import com.test.amaro.amarotest.network.ProductsRepository;
 import com.test.amaro.amarotest.network.ProductsResponse;
@@ -29,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
 
     private Toolbar mToolbar;
 
-    @BindView(R.id.test)
-    TextView tvTest;
+    @BindView(R.id.rv_mainlayout)
+    RecyclerView mRecyclerView;
 
     @BindString(R.string.str_all_time_best_sellers)
     String mAllTimeBestSellers;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
         mProductsRepository = new ProductsRepository(this);
         mProductsRepository.getBestSellers(this);
 
+
     }
 
     private void initToolbar() {
@@ -60,7 +64,18 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
 
         if (response.isSuccessful()) {
 
-            tvTest.setText(new Gson().toJson(response.body()));
+            mResponse = response.body();
+            mBestSellersList = mResponse.getProductsList();
+
+            int resId = R.anim.layout_animation_fall_down;
+            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, resId);
+            mRecyclerView.setLayoutAnimation(animation);
+
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            ProductMainAdapter adapter = new ProductMainAdapter(mBestSellersList, this);
+            mRecyclerView.setAdapter(adapter);
+
+            //tvTest.setText(new Gson().toJson(response.body()));
 
         } else {
             Toast.makeText(this, "response fail: " + response.raw().cacheResponse(), Toast.LENGTH_SHORT).show();
@@ -71,7 +86,5 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
     @Override
     public void onFailure(Call<ProductsResponse> call, Throwable t) {
         Toast.makeText(this, "onFailure ", Toast.LENGTH_SHORT).show();
-
-        tvTest.setText(t.getMessage());
     }
 }
