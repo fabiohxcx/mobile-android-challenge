@@ -1,16 +1,22 @@
 package com.test.amaro.amarotest.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
 import com.test.amaro.amarotest.R;
 import com.test.amaro.amarotest.adapters.ProductMainAdapter;
+import com.test.amaro.amarotest.listener.HidingScrollListener;
 import com.test.amaro.amarotest.model.Product;
 import com.test.amaro.amarotest.network.ProductsRepository;
 import com.test.amaro.amarotest.network.ProductsResponse;
@@ -32,11 +38,18 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
 
     private Toolbar mToolbar;
 
+    @BindView(R.id.appbar)
+    AppBarLayout mAppBarLayout;
+
     @BindView(R.id.rv_mainlayout)
     RecyclerView mRecyclerView;
 
     @BindString(R.string.str_all_time_best_sellers)
     String mAllTimeBestSellers;
+
+
+    @BindView(R.id.fab)
+    FloatingActionButton mFabButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +88,18 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
             ProductMainAdapter adapter = new ProductMainAdapter(mBestSellersList, this);
             mRecyclerView.setAdapter(adapter);
 
-            //tvTest.setText(new Gson().toJson(response.body()));
+            //setting up our OnScrollListener
+            mRecyclerView.setOnScrollListener(new HidingScrollListener() {
+                @Override
+                public void onHide() {
+                    hideViews();
+                }
+
+                @Override
+                public void onShow() {
+                    showViews();
+                }
+            });
 
         } else {
             Toast.makeText(this, "response fail: " + response.raw().cacheResponse(), Toast.LENGTH_SHORT).show();
@@ -86,5 +110,19 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
     @Override
     public void onFailure(Call<ProductsResponse> call, Throwable t) {
         Toast.makeText(this, "onFailure ", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void hideViews() {
+       // mAppBarLayout.animate().translationY(-mAppBarLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) mFabButton.getLayoutParams();
+        int fabBottomMargin = lp.bottomMargin;
+        mFabButton.animate().translationY(mFabButton.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
+    }
+
+    private void showViews() {
+       // mAppBarLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+        mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 }
