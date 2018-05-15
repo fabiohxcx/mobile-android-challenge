@@ -18,6 +18,7 @@ public class Product {
 
     private String color;
 
+    @SerializedName("on_sale")
     private boolean onSale;
 
     @SerializedName("regular_price")
