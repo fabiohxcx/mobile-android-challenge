@@ -3,7 +3,6 @@ package com.test.amaro.amarotest.ui;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +25,7 @@ import java.util.List;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.kobakei.materialfabspeeddial.FabSpeedDial;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
 
 
     @BindView(R.id.fab)
-    FloatingActionButton mFabButton;
+    FabSpeedDial mFabButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
 
 
     private void hideViews() {
-       // mAppBarLayout.animate().translationY(-mAppBarLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+        // mAppBarLayout.animate().translationY(-mAppBarLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2));
 
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) mFabButton.getLayoutParams();
         int fabBottomMargin = lp.bottomMargin;
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
     }
 
     private void showViews() {
-       // mAppBarLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+        // mAppBarLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
         mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 }
