@@ -1,10 +1,16 @@
 package com.test.amaro.amarotest.model;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Size {
 
-    private boolean available;
-    private String size;
-    private String sku;
+    boolean available;
+    String size;
+    String sku;
+
+    public Size() {
+    }
 
     public boolean isAvailable() {
         return available;

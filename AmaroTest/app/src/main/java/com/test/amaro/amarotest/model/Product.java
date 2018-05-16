@@ -2,40 +2,45 @@ package com.test.amaro.amarotest.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
+@Parcel
 public class Product {
 
-    private String name;
+    String name;
 
-    private String style;
+    String style;
 
     @SerializedName("code_color")
-    private String codeColor;
+    String codeColor;
 
     @SerializedName("color_slug")
-    private String colorSlug;
+    String colorSlug;
 
-    private String color;
+    String color;
 
     @SerializedName("on_sale")
-    private boolean onSale;
+    boolean onSale;
 
     @SerializedName("regular_price")
-    private String regularPrice;
+    String regularPrice;
 
     @SerializedName("actual_price")
-    private String actualPrice;
+    String actualPrice;
 
     @SerializedName("discount_percentage")
-    private String discountPercentage;
+    String discountPercentage;
 
-    private String installments;
+    String installments;
 
-    private String image;
+    String image;
 
-    private List<Size> sizes;
+    List<Size> sizes;
 
+    public Product() {
+    }
 
     public String getName() {
         return name;

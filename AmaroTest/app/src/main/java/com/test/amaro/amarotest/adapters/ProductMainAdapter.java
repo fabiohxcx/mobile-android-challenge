@@ -1,19 +1,23 @@
 package com.test.amaro.amarotest.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.test.amaro.amarotest.R;
 import com.test.amaro.amarotest.model.Product;
+import com.test.amaro.amarotest.ui.ProductActivity;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -59,8 +63,8 @@ public class ProductMainAdapter extends RecyclerView.Adapter<ProductMainAdapter.
 
     public class ProductHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.constraint_product)
-        LinearLayout constraintLayoutItem;
+        @BindView(R.id.frame_product)
+        FrameLayout constraintLayoutItem;
 
         @BindView(R.id.tv_name)
         TextView mName;
@@ -79,6 +83,10 @@ public class ProductMainAdapter extends RecyclerView.Adapter<ProductMainAdapter.
 
         @Override
         public void onClick(View v) {
+
+            Intent intent = new Intent(context, ProductActivity.class);
+            intent.putExtra("product", Parcels.wrap(productsList.get(getAdapterPosition())));
+            context.startActivity(intent);
 
         }
     }

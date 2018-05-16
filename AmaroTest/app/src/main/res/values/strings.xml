@@ -4,4 +4,5 @@
     <string name="on_sale">On Sale</string>
     <string name="by_price">By price</string>
     <string name="all_best_sellers">All Best Sellers</string>
+    <string name="line"><strike> R$ 119,90 </strike> </string>
 </resources>
