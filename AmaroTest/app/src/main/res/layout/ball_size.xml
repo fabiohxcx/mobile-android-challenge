@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/sizes"
+    android:layout_marginRight="@dimen/margin_less"
+    android:layout_marginStart="8dp"
+    tools:text="01" />

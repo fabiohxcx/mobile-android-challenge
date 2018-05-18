@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_product"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".ui.ProductActivity">
@@ -12,13 +13,12 @@
 
         <ImageView
             android:id="@+id/iv_product_detail"
-            android:layout_width="300dp"
-            android:layout_height="400dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:elevation="4dp"
-            android:src="@drawable/logo_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,6 +34,14 @@
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/iv_product_detail" />
 
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="8dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_detail" />
+
 
         <LinearLayout
             android:id="@+id/ll_price"
@@ -45,29 +53,26 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name_detail">
+            app:layout_constraintTop_toBottomOf="@+id/line">
 
             <TextView
                 android:id="@+id/tv_regular_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="@string/line"
                 android:textColor="@color/gray" />
 
             <TextView
                 android:id="@+id/tv_actual_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:text="R$ 119,90" />
+                android:layout_marginRight="8dp" />
 
             <TextView
                 android:id="@+id/tv_discount_percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="(12% off)"
                 android:textColor="@color/red" />
 
 
@@ -85,14 +90,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_price">
-
-            <TextView
-                android:id="@+id/size1"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/ball"
-                android:gravity="center"
-                android:text="P" />
 
         </LinearLayout>
 
