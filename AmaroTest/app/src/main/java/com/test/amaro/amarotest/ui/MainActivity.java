@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
 
     @BindView(R.id.fab)
     FabSpeedDial mFabButton;
+
+    @BindView(R.id.pb_loading_indicator)
+    ProgressBar mProgressBar;
 
     @BindString(R.string.str_all_time_best_sellers)
     String mAllTimeBestSellers;
@@ -94,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
             if (mBestSellersList != null && !mBestSellersList.isEmpty()) {
                 setupRecyclerView(mBestSellersList);
             }
+
+            mProgressBar.setVisibility(View.INVISIBLE);
 
         } else {
             Toast.makeText(this, "response fail: " + response.raw().cacheResponse(), Toast.LENGTH_SHORT).show();
