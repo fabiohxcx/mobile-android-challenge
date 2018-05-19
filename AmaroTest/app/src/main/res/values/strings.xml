@@ -5,4 +5,6 @@
     <string name="by_price">By price</string>
     <string name="all_best_sellers">All Best Sellers</string>
     <string name="discount">( %1$s off ) </string>
+    <string name="retry">Retry</string>
+    <string name="no_internet_connection">No internet connection!</string>
 </resources>

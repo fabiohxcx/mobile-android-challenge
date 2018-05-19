@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +15,9 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LayoutAnimationController;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.test.amaro.amarotest.R;
 import com.test.amaro.amarotest.adapters.ProductMainAdapter;
@@ -31,6 +32,7 @@ import java.util.List;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.kobakei.materialfabspeeddial.FabSpeedDial;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
     @BindView(R.id.pb_loading_indicator)
     ProgressBar mProgressBar;
 
+    @BindView(R.id.bt_retry_main)
+    Button mBtRetry;
+
     @BindString(R.string.str_all_time_best_sellers)
     String mAllTimeBestSellers;
 
@@ -64,6 +69,12 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
 
     @BindString(R.string.by_price)
     String mByPrice;
+
+    @BindString(R.string.retry)
+    String mRetry;
+
+    @BindString(R.string.no_internet_connection)
+    String mNoInternetConnection;
 
 
     @Override
@@ -74,22 +85,26 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
 
         initToolbar();
 
-        mProductsRepository = new ProductsRepository(this);
-        mProductsRepository.getBestSellers(this);
+        loadProductsData();
 
         mFabButton.addOnMenuItemClickListener(this);
 
     }
 
-    private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        setTitle(mAllTimeBestSellers);
-        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+    //Button clicks
+    @OnClick(R.id.bt_retry_main)
+    public void retryGetProducts(View view) {
+        showRetryButton(false);
+        showProgressBar(true);
+
+        loadProductsData();
+
     }
 
+    // Callback<ProductsResponse>
     @Override
     public void onResponse(Call<ProductsResponse> call, Response<ProductsResponse> response) {
+        showProgressBar(false);
 
         if (response.isSuccessful()) {
 
@@ -100,13 +115,17 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
                 setupRecyclerView(mBestSellersList);
             }
 
-            mProgressBar.setVisibility(View.INVISIBLE);
-
         } else {
-            Toast.makeText(this, "response fail: " + response.raw().cacheResponse(), Toast.LENGTH_SHORT).show();
+            showRetryButton(true);
         }
 
     }
+
+    @Override
+    public void onFailure(Call<ProductsResponse> call, Throwable t) {
+        showRetryButton(true);
+    }
+
 
     private void setupRecyclerView(List<Product> productList) {
 
@@ -132,12 +151,7 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
         });
     }
 
-    @Override
-    public void onFailure(Call<ProductsResponse> call, Throwable t) {
-        Toast.makeText(this, "onFailure ", Toast.LENGTH_SHORT).show();
-    }
-
-
+    //Show hide FAB
     private void hideViews() {
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) mFabButton.getLayoutParams();
         int fabBottomMargin = lp.bottomMargin;
@@ -148,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
         mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 
-
+    //Mini FAB actions
     @Override
     public void onMenuItemClick(FloatingActionButton miniFab, @Nullable TextView label, int itemId) {
 
@@ -168,13 +182,51 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
                 setupRecyclerView(byPriceProducts);
             }
 
-
         } else if (itemId == R.id.fab_all) {
 
             setTitle(mAllTimeBestSellers);
-            setupRecyclerView(mBestSellersList);
+            if (mBestSellersList != null && !mBestSellersList.isEmpty()) {
+                setupRecyclerView(mBestSellersList);
+            }
 
         }
 
+    }
+
+    //Util methods
+    private void loadProductsData() {
+        mProductsRepository = new ProductsRepository(this);
+        mProductsRepository.getBestSellers(this);
+    }
+
+    private void initToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        setTitle(mAllTimeBestSellers);
+        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+    }
+
+    private void showRetryButton(boolean visible) {
+        mBtRetry.setVisibility((visible) ? View.VISIBLE : View.INVISIBLE);
+        showSnackbarRetry();
+    }
+
+    private void showProgressBar(boolean visible) {
+        mProgressBar.setVisibility((visible) ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    private void showSnackbarRetry() {
+        Snackbar snackbar = Snackbar
+                .make(mRecyclerView, mNoInternetConnection, Snackbar.LENGTH_LONG)
+                .setAction(mRetry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showRetryButton(false);
+                        showProgressBar(true);
+                        loadProductsData();
+                    }
+                });
+
+        snackbar.show();
     }
 }
