@@ -39,7 +39,7 @@ public class ProductsUtil {
         return byPriceList;
     }
 
-    private static double parseCurrencyPtBR(String price) {
+    public static double parseCurrencyPtBR(String price) {
 
         try {
             Locale ptBR = new Locale("pt", "BR");
