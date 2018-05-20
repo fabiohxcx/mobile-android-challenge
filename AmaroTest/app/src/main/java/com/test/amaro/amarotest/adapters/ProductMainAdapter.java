@@ -53,13 +53,17 @@ public class ProductMainAdapter extends RecyclerView.Adapter<ProductMainAdapter.
             holder.mName.setText(product.getName());
             holder.mPrice.setText(product.getActualPrice());
 
+            if (!TextUtils.isEmpty(product.getImage())) {
+                Picasso.get().load(product.getImage()).placeholder(R.drawable.file_image).into(holder.mImageProduct);
+            } else {
+                holder.mImageProduct.setImageDrawable(context.getResources().getDrawable(R.drawable.file_image));
+            }
+
             if (product.isOnSale()) {
                 holder.mRegularPrice.setText(product.getRegularPrice());
                 holder.mRegularPrice.setPaintFlags(holder.mRegularPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            }
-
-            if (!TextUtils.isEmpty(product.getImage())) {
-                Picasso.get().load(product.getImage()).placeholder(R.drawable.file_image).into(holder.mImageProduct);
+            } else {
+                holder.mRegularPrice.setText(""); //fix scrolling bug
             }
         }
 

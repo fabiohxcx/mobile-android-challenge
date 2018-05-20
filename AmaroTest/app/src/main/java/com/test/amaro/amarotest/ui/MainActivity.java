@@ -27,6 +27,7 @@ import com.test.amaro.amarotest.network.ProductsRepository;
 import com.test.amaro.amarotest.network.ProductsResponse;
 import com.test.amaro.amarotest.util.ProductsUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindString;
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
         }
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, columns));
-        ProductMainAdapter adapter = new ProductMainAdapter(productList, this);
+        ProductMainAdapter adapter = new ProductMainAdapter(new ArrayList<Product>(mBestSellersList), this);
         mRecyclerView.setAdapter(adapter);
 
         //setting up our OnScrollListener
