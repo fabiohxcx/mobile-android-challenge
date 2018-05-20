@@ -52,7 +52,7 @@ public class ProductMainAdapter extends RecyclerView.Adapter<ProductMainAdapter.
             holder.mName.setText(product.getName());
             holder.mPrice.setText(product.getActualPrice());
             if (!TextUtils.isEmpty(product.getImage())) {
-                Picasso.get().load(product.getImage()).placeholder(R.drawable.frame_white).into(holder.mImageProduct);
+                Picasso.get().load(product.getImage()).placeholder(R.drawable.file_image).into(holder.mImageProduct);
             }
         }
 

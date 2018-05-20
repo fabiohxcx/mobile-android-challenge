@@ -23,7 +23,7 @@
             android:elevation="2dp"
             android:padding="5dp"
             android:scaleType="fitStart"
-            android:src="@drawable/frame_white"
+            android:src="@drawable/file_image"
             android:transitionName="product_image" />
     </FrameLayout>
 
