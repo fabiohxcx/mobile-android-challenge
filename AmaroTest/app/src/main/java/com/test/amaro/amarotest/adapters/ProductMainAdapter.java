@@ -1,8 +1,10 @@
 package com.test.amaro.amarotest.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -86,7 +88,9 @@ public class ProductMainAdapter extends RecyclerView.Adapter<ProductMainAdapter.
 
             Intent intent = new Intent(context, ProductActivity.class);
             intent.putExtra("product", Parcels.wrap(productsList.get(getAdapterPosition())));
-            context.startActivity(intent);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, mImageProduct, "product_image");
+            context.startActivity(intent, options.toBundle());
+
 
         }
     }
