@@ -3,6 +3,7 @@ package com.test.amaro.amarotest.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +52,12 @@ public class ProductMainAdapter extends RecyclerView.Adapter<ProductMainAdapter.
 
             holder.mName.setText(product.getName());
             holder.mPrice.setText(product.getActualPrice());
+
+            if (product.isOnSale()) {
+                holder.mRegularPrice.setText(product.getRegularPrice());
+                holder.mRegularPrice.setPaintFlags(holder.mRegularPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
+
             if (!TextUtils.isEmpty(product.getImage())) {
                 Picasso.get().load(product.getImage()).placeholder(R.drawable.file_image).into(holder.mImageProduct);
             }
@@ -70,6 +77,9 @@ public class ProductMainAdapter extends RecyclerView.Adapter<ProductMainAdapter.
 
         @BindView(R.id.tv_name)
         TextView mName;
+
+        @BindView(R.id.tv_regular_price)
+        TextView mRegularPrice;
 
         @BindView(R.id.tv_actual_price)
         TextView mPrice;

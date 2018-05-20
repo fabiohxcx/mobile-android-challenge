@@ -133,7 +133,13 @@ public class MainActivity extends AppCompatActivity implements Callback<Products
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, resId);
         mRecyclerView.setLayoutAnimation(animation);
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        int columns = 2;
+
+        if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+            columns = 4;
+        }
+
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, columns));
         ProductMainAdapter adapter = new ProductMainAdapter(productList, this);
         mRecyclerView.setAdapter(adapter);
 
