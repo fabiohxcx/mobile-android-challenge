@@ -37,6 +37,9 @@ public class ProductActivity extends AppCompatActivity {
     @BindView(R.id.tv_discount_percentage)
     TextView mDiscountPercentage;
 
+    @BindView(R.id.tv_installments)
+    TextView mInstallments;
+
     @BindView(R.id.ll_sizes)
     LinearLayout mLinearLayoutSizes;
 
@@ -65,6 +68,8 @@ public class ProductActivity extends AppCompatActivity {
             mRegularPrice.setPaintFlags(mRegularPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             mDiscountPercentage.setText(getString(R.string.discount, product.getDiscountPercentage()));
         }
+
+        mInstallments.setText(product.getInstallments());
 
         for (int i = 0; i < product.getSizes().size(); i++) {
 
