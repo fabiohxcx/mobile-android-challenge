@@ -22,6 +22,9 @@ import butterknife.ButterKnife;
 
 public class ProductActivity extends AppCompatActivity {
 
+    @BindView(R.id.iv_sale)
+    ImageView mImageViewSale;
+
     @BindView(R.id.iv_product_detail)
     ImageView mImageViewProduct;
 
@@ -70,6 +73,8 @@ public class ProductActivity extends AppCompatActivity {
         }
 
         mInstallments.setText(product.getInstallments());
+
+        mImageViewSale.setVisibility(product.isOnSale() ? View.VISIBLE : View.GONE);
 
         for (int i = 0; i < product.getSizes().size(); i++) {
 
